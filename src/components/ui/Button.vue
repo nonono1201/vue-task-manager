@@ -15,6 +15,7 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    // 活性・非活性
     disabled: {
         type: Boolean,
         default: false

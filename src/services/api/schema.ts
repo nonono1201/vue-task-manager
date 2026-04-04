@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+/**
+ * タスク
+ */
 export const TaskSchema = z.object({
   id: z.number(),
   title: z.string(),
@@ -7,6 +10,9 @@ export const TaskSchema = z.object({
   completed: z.boolean()
 })
 
+/**
+ * タスク一覧
+ */
 export const TasksSchema = z.array(TaskSchema)
 
 export type Task = z.infer<typeof TaskSchema>
