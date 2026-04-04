@@ -10,15 +10,15 @@
         <tbody>
             <tr v-for="row in tasks">
                 <td>
-                    <Button icon="visibility" :name="BUTTON_LABEL.DETAIL" :disabled="buttonDisabled" @on-click="onDetail(row.id)" />
-                    <Button icon="edit" :name="BUTTON_LABEL.EDIT"  :disabled="buttonDisabled" @on-click="onEdit(row.id)" />
-                    <Button icon="delete"  :name="BUTTON_LABEL.DELETE"  :disabled="buttonDisabled" @on-click="onDelete(row.id)" />
+                    <Button icon="visibility" :name="BUTTON_LABEL.DETAIL" @on-click="onDetail(row.id)" />
+                    <Button icon="edit" :name="BUTTON_LABEL.EDIT" @on-click="onEdit(row.id)" />
+                    <Button icon="delete" :name="BUTTON_LABEL.DELETE" @on-click="onDelete(row.id)" />
                 </td>
                 <td>{{ row.title }}</td>
                 <td>
                     {{ row.completed ? STATUS.COMPLETED : STATUS.PENDING }}
                 </td>
-                <td>{{ row.dueDate }}</td>
+                <td>{{ row.dueDate.toLocaleDateString('ja-JP') }}</td>
             </tr>
         </tbody>
     </table>
@@ -26,20 +26,15 @@
 
 <script setup lang="ts">
 import type { Task } from '@/features/tasks/types/task';
-import { computed, ref, type Ref } from 'vue';
+import { computed, onBeforeMount, ref, type Ref } from 'vue';
 import { BUTTON_LABEL, HEADERS, STATUS } from '../constants/task';
 import Button from '@/components/ui/Button.vue';
+import { useTaskStore } from '../store/taskStore';
 
-const buttonDisabled: Ref<boolean> = ref(false);
+const store = useTaskStore();
 
-const tasks: Ref<Task[]> = computed(() =>
-    [{
-        id: 1,
-        title: 'タスク名',
-        completed: false,
-        dueDate: '2026-12-12',
-    }]
-)
+// タスク一覧
+const tasks: Ref<Task[]> = computed(() => store.tasks);
 
 
 // 詳細
@@ -62,6 +57,11 @@ const onAdd = (id: number) => {
     // TODO 登録画面へ遷移
 
 }
+
+onBeforeMount(() => {
+    // 一覧情報を取得
+    store.getTasks();
+})
 </script>
 
-<style></style>
+<style lang="sass"></style>
