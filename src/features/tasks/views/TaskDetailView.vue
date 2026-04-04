@@ -21,19 +21,20 @@ const store = useTaskStore();
 const id = route.params.id;
 const task = computed(() => store.currentTask)
 
-// 編集
+// 戻る
 const onBack = () => {
-    router.push({ name: 'task' })
+    router.push({ name: 'task.list' })
 }
 
 // 編集
 const onEdit = () => {
-    router.push({ name: 'task.detail', params: { id: id } })
+    router.push({ name: 'task.update', params: { id: id } })
 }
 
 // 削除
 const onDelete = () => {
-    // TODO 削除処理
+    store.deleteTask(Number(id))
+    router.push({ name: 'task.list' })
 }
 
 onBeforeMount(() => {

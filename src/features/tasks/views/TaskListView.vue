@@ -51,7 +51,7 @@ const onEdit = (id: number) => {
 
 // 削除
 const onDelete = (id: number) => {
-    // TODO 削除処理
+    store.deleteTask(Number(id))
 }
 
 // 追加

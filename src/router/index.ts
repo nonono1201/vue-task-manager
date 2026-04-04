@@ -9,7 +9,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'task',
+      name: 'task.list',
       component: TaskListView,
     },
     {

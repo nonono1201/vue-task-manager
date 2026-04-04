@@ -23,13 +23,13 @@ const task: Ref<TaskFormModel> = ref(TASK_INIT);
 
 // 戻る
 const onBack = () => {
-    router.push({ name: 'task' })
+    router.push({ name: 'task.list' })
 }
 
 // 更新
 const onSave = () => {
-    // TODO 更新処理
-    router.push({ name: 'task' })
+    store.updateTask({...task.value, id: Number(id)});
+    router.push({ name: 'task.list' })
 }
 
 onBeforeMount(() => {

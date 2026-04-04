@@ -21,12 +21,12 @@ const task: Ref<TaskFormModel> = ref(TASK_INIT);
 
 // 戻る
 const onBack = () => {
-    router.push({ name: 'task' })
+    router.push({ name: 'task.list' })
 }
 
 // 更新
 const onSave = () => {
-    // TODO 登録処理
-    router.push({ name: 'task' })
+    store.registTask(task.value);
+    router.push({ name: 'task.list' })
 }
 </script>
