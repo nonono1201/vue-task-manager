@@ -1,19 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { TaskFormModel, TaskModel } from '../types/task'
+import type { TaskFormType, TaskType } from '../types/task'
 import { taskApi } from '@/services/api/taskApi'
 import { TASK_INIT } from '../constants/task'
 
 export const useTaskStore = defineStore('task', () => {
-  /**
-   * タスク一覧
-   */
-  const tasks: Ref<TaskModel[]> = ref([])
 
-  /**
-   * タスク(詳細)
-   */
-  const currentTaskForm: Ref<TaskFormModel> = ref(TASK_INIT)
+  /** タスク一覧 */
+  const tasks: Ref<TaskType[]> = ref([])
+
+  /** タスク(詳細) */
+  const currentTaskForm: Ref<TaskFormType> = ref(TASK_INIT)
 
   /**
    * タスク一覧取得
@@ -35,7 +32,7 @@ export const useTaskStore = defineStore('task', () => {
    * タスク登録
    * @param input 登録情報
    */
-  const registTask = async (input: TaskFormModel) => {
+  const registTask = async (input: TaskFormType) => {
     await taskApi.regist(input);
     getTasks();
   }
@@ -44,7 +41,7 @@ export const useTaskStore = defineStore('task', () => {
    * タスク更新
    * @param input 更新情報
    */
-  const updateTask = async (input: TaskModel) => {
+  const updateTask = async (input: TaskType) => {
     await taskApi.update(input)
      getTasks();
   }

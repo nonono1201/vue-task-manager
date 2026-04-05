@@ -10,7 +10,6 @@
         <tbody>
             <tr v-for="row in tasks">
                 <td>
-                    <Button icon="visibility" :name="BUTTON_LABEL.DETAIL" @on-click="onDetail(row.id)" />
                     <Button icon="edit" :name="BUTTON_LABEL.EDIT" @on-click="onEdit(row.id)" />
                     <Button icon="delete" :name="BUTTON_LABEL.DELETE" @on-click="onDelete(row.id)" />
                 </td>
@@ -25,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TaskModel } from '@/features/tasks/types/task';
+import type { TaskType } from '@/features/tasks/types/task';
 import { computed, onBeforeMount, ref, type Ref } from 'vue';
 import { BUTTON_LABEL, HEADERS, STATUS } from '../constants/task';
 import Button from '@/components/ui/Button.vue';
@@ -36,13 +35,7 @@ const router = useRouter();
 const store = useTaskStore();
 
 // タスク一覧
-const tasks: Ref<TaskModel[]> = computed(() => store.tasks);
-
-
-// 詳細
-const onDetail = (id: number) => {
-    router.push({ name: 'task.detail', params: { id: id } })
-}
+const tasks: Ref<TaskType[]> = computed(() => store.tasks);
 
 // 編集
 const onEdit = (id: number) => {

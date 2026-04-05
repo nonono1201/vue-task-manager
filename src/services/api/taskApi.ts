@@ -1,10 +1,9 @@
-import { max } from 'date-fns'
-import { TaskSchema, TasksSchema, type Task, type TaskRegist } from './schema'
+import type { TaskRegistSchema, TaskSchema } from './schema';
 
 /**
  * タスク一覧(mock)
  */
-let mockTasks: Task[] = [
+let mockTasks: TaskSchema[] = [
   {
     id: 1,
     title: 'タスク名1',
@@ -24,10 +23,10 @@ export const taskApi = {
    * 一覧情報取得
    * @returns タスク一覧
    */
-  getTasks: async (): Promise<Task[]> => {
+  getTasks: async (): Promise<TaskSchema[]> => {
     // 疑似API呼び出し：mockTasksを返す
     await new Promise((r) => setTimeout(r, 200))
-    return TasksSchema.parse(mockTasks)
+    return mockTasks
   },
 
   /**
@@ -35,21 +34,21 @@ export const taskApi = {
    * @param id タスクID
    * @returns タスク
    */
-  getTaskById: async (id: number): Promise<Task> => {
+  getTaskById: async (id: number): Promise<TaskSchema> => {
     // 疑似API呼び出し：mockTasksから一致するidの情報を返す
     await new Promise((r) => setTimeout(r, 200))
-    return TaskSchema.parse(mockTasks[0])
+    return mockTasks[0]
   },
 
   /**
    * 登録
    * @param input 登録情報
    */
-  regist: async (input: TaskRegist) => {
+  regist: async (input: TaskRegistSchema) => {
     // 疑似API呼び出し：mockTasksに追加する
     await new Promise((r) => setTimeout(r, 200))
     const maxId = mockTasks.reduce((max, task) => Math.max(max, task.id), -Infinity)
-    const newTask: Task = {
+    const newTask: TaskSchema = {
       ...input,
       id: maxId + 1,
     }
@@ -60,7 +59,7 @@ export const taskApi = {
    * 更新
    * @param input 更新情報
    */
-  update: async (input: Task) => {
+  update: async (input: TaskSchema) => {
     // 疑似API呼び出し：一致するidのtaskを更新
     await new Promise((r) => setTimeout(r, 200))
     const taskIndex = mockTasks.findIndex((task) => task.id === input.id)

@@ -1,7 +1,7 @@
 /**
  * タスク(フォーム用)
  */
-export interface TaskFormModel {
+export type TaskFormType = {
   title: string
   dueDate: Date
   completed: boolean
@@ -10,6 +10,6 @@ export interface TaskFormModel {
 /**
  * タスク
  */
-export interface TaskModel extends TaskFormModel {
+export type TaskType = TaskFormType & {
   id: number
 }

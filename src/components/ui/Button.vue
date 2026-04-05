@@ -1,33 +1,32 @@
 <template>
-    <button :disabled="props.disabled" @click="onClick">
-        <span class="material-icons">{{ props.icon }}</span>
-        {{ props.name }}
+    <button :disabled="disabled" :type="type" :form="form" @click="onClick">
+        <span class="material-icons">{{ icon }}</span>
+        {{ name }}
     </button>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-    icon: {
-        type: String,
-        default: ''
-    },
-    name: {
-        type: String,
-        default: ''
-    },
-    // 活性・非活性
-    disabled: {
-        type: Boolean,
-        default: false
-    }
-})
+import type { ButtonHTMLAttributes } from 'vue';
 
-const emit= defineEmits(["onClick"])
+const {
+    icon = '',
+    name = '',
+    disabled = false,
+    type = 'button',
+    form = ''
+} = defineProps<{
+    icon?: string
+    name?: string
+    disabled?: boolean
+    type?: ButtonHTMLAttributes['type']
+    form?: string
+}>();
+
+const emit = defineEmits(["onClick"])
 
 const onClick = () => {
     emit("onClick");
 }
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

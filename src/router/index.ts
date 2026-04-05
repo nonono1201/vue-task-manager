@@ -1,4 +1,3 @@
-import TaskDetailView from '@/features/tasks/views/TaskDetailView.vue'
 import TaskListView from '@/features/tasks/views/TaskListView.vue'
 import TaskRegistView from '@/features/tasks/views/TaskRegistView.vue'
 import TaskUpdateView from '@/features/tasks/views/TaskUpdateView.vue'
@@ -13,16 +12,11 @@ const router = createRouter({
       component: TaskListView,
     },
     {
-      path: '/detail/:id',
-      name: 'task.detail',
-      component: TaskDetailView,
-    },
-        {
       path: '/update/:id',
       name: 'task.update',
       component: TaskUpdateView,
     },
-        {
+    {
       path: '/regist',
       name: 'task.regist',
       component: TaskRegistView,

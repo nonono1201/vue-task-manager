@@ -1,23 +1,29 @@
 <template>
     <h1>タスク登録</h1>
-    <TaskForm v-model="task" :disabled="false" />
+    <TaskForm :initialValues="TASK_INIT" @hasError="onFormErrorChange" @onSubmit="onSubmit" />
     <Button icon="arrow_back" :name="BUTTON_LABEL.BACK" @on-click="onBack()" />
-    <Button icon="save" :name="BUTTON_LABEL.SAVE" @on-click="onSave()" />
+    <Button icon="save" form="task-form" :name="BUTTON_LABEL.SAVE" :disabled="saveButtonDisabled" type="submit"/>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 import TaskForm from '../components/TaskForm.vue';
 import { useTaskStore } from '../store/taskStore';
 import { useRouter } from 'vue-router';
 import { BUTTON_LABEL, TASK_INIT } from '../constants/task';
 import Button from '@/components/ui/Button.vue';
-import type { TaskFormModel } from '../types/task';
+import type { TaskFormType } from '../types/task';
 
 const router = useRouter();
-
 const store = useTaskStore();
-const task: Ref<TaskFormModel> = ref(TASK_INIT);
+
+// 更新ボタン活性・非活性
+const saveButtonDisabled = ref(false)
+
+// formのエラー状態が変わったとき
+const onFormErrorChange = (isFormError: boolean) => {
+    saveButtonDisabled.value = isFormError;
+}
 
 // 戻る
 const onBack = () => {
@@ -25,8 +31,8 @@ const onBack = () => {
 }
 
 // 更新
-const onSave = () => {
-    store.registTask(task.value);
+const onSubmit = (value: TaskFormType) => {
+    store.registTask(value);
     router.push({ name: 'task.list' })
 }
 </script>

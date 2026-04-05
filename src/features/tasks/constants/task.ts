@@ -1,14 +1,14 @@
-import type { TaskFormModel } from "../types/task";
+import type { TaskFormType } from "../types/task";
 
 /** フォームのラベル */
 export const FORM_LABEL = {
     TITLE: 'タスク名',
-    STATUS: 'ステータス',
+    CPMPLETED: 'ステータス',
     DUE_DATE: '期日'
 }
 
 /** 一覧のヘッダー */
-export const HEADERS:string[] = ['', FORM_LABEL.TITLE, FORM_LABEL.STATUS, FORM_LABEL.DUE_DATE];
+export const HEADERS:string[] = ['', FORM_LABEL.TITLE, FORM_LABEL.CPMPLETED, FORM_LABEL.DUE_DATE];
 
 /** ボタンラベル */
 export const BUTTON_LABEL = {
@@ -27,7 +27,7 @@ export const STATUS = {
 }
 
 /** タスク初期値 */
-export const TASK_INIT:TaskFormModel = {
+export const TASK_INIT:TaskFormType = {
     title: '',
     dueDate: new Date,
     completed: false
