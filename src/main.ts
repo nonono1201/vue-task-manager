@@ -12,12 +12,13 @@ import { required } from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n';
 import ja from '@vee-validate/i18n/dist/locale/ja.json'
 
-// ルールを登録
+// vee-validate設定
 defineRule('required', required)
 configure({
+  // メッセージを日本語へ
   generateMessage: localize('ja', {
     messages: ja.messages,
-  }), // 日本語を設定
+  }),
 })
 setLocale('ja')
 

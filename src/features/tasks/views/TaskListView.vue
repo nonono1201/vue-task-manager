@@ -17,7 +17,7 @@
                 <td>
                     {{ row.completed ? STATUS.COMPLETED : STATUS.PENDING }}
                 </td>
-                <td>{{ row.dueDate.toLocaleDateString('ja-JP') }}</td>
+                <td>{{ row.dueDate }}</td>
             </tr>
         </tbody>
     </table>

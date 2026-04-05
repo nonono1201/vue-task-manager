@@ -3,7 +3,7 @@
  */
 export interface TaskRegistSchema {
   title: string
-  dueDate: Date
+  dueDate: string
   completed: boolean
 }
 

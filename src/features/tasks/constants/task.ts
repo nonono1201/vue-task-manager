@@ -29,6 +29,6 @@ export const STATUS = {
 /** タスク初期値 */
 export const TASK_INIT:TaskFormType = {
     title: '',
-    dueDate: new Date,
+    dueDate: '',
     completed: false
 }

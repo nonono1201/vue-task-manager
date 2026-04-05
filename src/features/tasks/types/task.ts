@@ -3,7 +3,7 @@
  */
 export type TaskFormType = {
   title: string
-  dueDate: Date
+  dueDate: string
   completed: boolean
 }
 
