@@ -1,6 +1,7 @@
 import TaskListView from '@/features/tasks/views/TaskListView.vue'
 import TaskRegistView from '@/features/tasks/views/TaskRegistView.vue'
 import TaskUpdateView from '@/features/tasks/views/TaskUpdateView.vue'
+import NotFoundViews from '@/views/NotFoundViews.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       name: 'task.regist',
       component: TaskRegistView,
     },
+    {
+      path: '/notfound',
+      name: 'error.notfound',
+      component: NotFoundViews,
+    }
   ],
 })
 

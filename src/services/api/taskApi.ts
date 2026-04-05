@@ -1,3 +1,4 @@
+import { BusinessError, NotFoundError } from '@/errors';
 import type { TaskRegistSchema, TaskSchema } from './schema';
 
 /**
@@ -37,7 +38,11 @@ export const taskApi = {
   getTaskById: async (id: number): Promise<TaskSchema> => {
     // 疑似API呼び出し：mockTasksから一致するidの情報を返す
     await new Promise((r) => setTimeout(r, 200))
-    return mockTasks[0]
+    const targetId = mockTasks.findIndex(task => task.id === id)
+    if (targetId === -1) {
+      throw new NotFoundError();
+    } 
+    return mockTasks[targetId]
   },
 
   /**
@@ -64,7 +69,7 @@ export const taskApi = {
     await new Promise((r) => setTimeout(r, 200))
     const taskIndex = mockTasks.findIndex((task) => task.id === input.id)
     if (taskIndex === -1) {
-      // TODO エラー処理
+      throw new BusinessError('更新対象のタスクが見つかりませんでした。')
     }
     mockTasks = mockTasks.map((task) => (task.id === input.id ? input : task))
   },
@@ -78,7 +83,7 @@ export const taskApi = {
     await new Promise((r) => setTimeout(r, 200))
         const taskIndex = mockTasks.findIndex((task) => task.id === id)
     if (taskIndex === -1) {
-      // TODO エラー処理
+      throw new BusinessError('削除対象のタスクが見つかりませんでした。')
     }
     mockTasks.splice(taskIndex, 1);
   },

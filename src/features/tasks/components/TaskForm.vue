@@ -2,17 +2,22 @@
   <Form
     ref="formRef"
     id="task-form"
-    :initial-values="props.initialValues"
+    :initial-values="store.taskForm"
     :validation-schema="schema"
     @submit="onSubmit"
   >
     <div class="task-form__item">
-      <label class="task-form__item-label">{{ FORM_LABEL.TITLE }}：</label>
+      <div class="task-form__item-label">
+        <label class="task-form__required">必須</label>
+        <label>{{ FORM_LABEL.TITLE }}：</label>
+      </div>
       <Field name="title" :label="FORM_LABEL.TITLE" type="text" />
       <ErrorMessage name="title" />
     </div>
     <div class="task-form__item">
-      <label class="task-form__item-label">{{ FORM_LABEL.CPMPLETED }}：</label>
+      <div class="task-form__item-label">
+        <label>{{ FORM_LABEL.CPMPLETED }}：</label>
+      </div>
       <Field
         name="completed"
         :label="FORM_LABEL.CPMPLETED"
@@ -26,14 +31,16 @@
       <ErrorMessage name=" completed" />
     </div>
     <div class="task-form__item">
-      <label class="task-form__item-label">{{ FORM_LABEL.DUE_DATE }}：</label>
+      <div class="task-form__item-label">
+        <label>{{ FORM_LABEL.DUE_DATE }}：</label>
+      </div>
       <Field name="dueDate" :label="FORM_LABEL.DUE_DATE" v-slot="{ value, handleChange }">
         <VueDatePicker
-        :enable-time-picker="false"
+          :enable-time-picker="false"
           :model-value="value"
           @update:model-value="handleChange"
           model-type="yyyy-MM-dd"
-          :formats="{ input: 'yyyy/MM/dd' }"
+          :formats="{ input: 'yyyy/MM/dd - HH:mm' }"
           :time-config="{ enableTimePicker: false }"
           auto-apply
         />
@@ -45,15 +52,13 @@
 
 <script setup lang="ts">
 import { FORM_LABEL, STATUS } from '../constants/task'
+import { useTaskStore } from '../store/taskStore'
 import type { TaskFormType } from '../types/task'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { ref, watch } from 'vue'
 
 const formRef = ref()
-const props = defineProps<{
-  // 初期値
-  initialValues: TaskFormType
-}>()
+const store = useTaskStore()
 const emit = defineEmits<{
   (e: 'onSubmit', value: TaskFormType): void
   (e: 'hasError', value: boolean): void
@@ -62,7 +67,6 @@ const emit = defineEmits<{
 // バリデーションスキーマ
 const schema = {
   title: 'required',
-  dueDate: 'required',
 }
 
 // Formのバリデーション状態を監視
@@ -76,9 +80,22 @@ watch(
 
 // フォーム送信が成功した場合の処理（親へデータを渡すなど）
 const onSubmit = (values: Record<string, any>) => {
-  console.log('実行')
   emit('onSubmit', values as TaskFormType)
 }
+
+watch(
+  () => store.taskForm,
+  (newTask) => {
+    if (newTask && formRef.value) {
+      // resetFormを使うと、Propsの値を新しい「初期値」としてセットし、
+      // 編集済みフラグ(meta.dirty)もリセットされます。
+      formRef.value.resetForm({
+        values: { ...newTask }
+      });
+    }
+  },
+  { deep: true},
+);
 </script>
 
 <style lang="sass" scoped></style>

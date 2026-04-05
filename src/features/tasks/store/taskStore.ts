@@ -9,8 +9,11 @@ export const useTaskStore = defineStore('task', () => {
   /** タスク一覧 */
   const tasks: Ref<TaskType[]> = ref([])
 
-  /** タスク(詳細) */
-  const currentTaskForm: Ref<TaskFormType> = ref(TASK_INIT)
+  /** タスク(入力情報) */
+  const taskForm: Ref<TaskFormType> = ref(TASK_INIT)
+
+  /** ローディング中か */
+  const isLoading: Ref<boolean> = ref(false);
 
   /**
    * タスク一覧取得
@@ -20,12 +23,21 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   /**
-   * タスク1件取得
+   * idに紐づくタスク(入力情報)を取得
    * @param id タスクID
    */
-  const getTaskById = async (id: number) => {
-    const task = tasks.value.find((task) => task.id === id)
-    currentTaskForm.value = task ?? (await taskApi.getTaskById(id))
+  const getTaskFormById = async (id: number) => {
+    isLoading.value =true
+    taskForm.value = await taskApi.getTaskById(id)
+    isLoading.value = false
+  }
+
+  /**
+   * タスク(入力情報)を設定
+   * @param task タスク
+   */
+  const setTaskForm = (task: TaskFormType) => {
+    taskForm.value = task
   }
 
   /**
@@ -55,13 +67,24 @@ export const useTaskStore = defineStore('task', () => {
     getTasks()
   }
 
+  /**
+   * ローディング中かの設定
+   * @param flg 設定値
+   */
+  const setIsLoading = (flg: boolean) => {
+    isLoading.value = flg;
+  }
+
   return {
     tasks,
-    currentTask: currentTaskForm,
+    taskForm,
+    isLoading,
     getTasks,
-    getTaskById,
+    getTaskFormById,
+    setTaskForm,
     registTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    setIsLoading
   }
 })
