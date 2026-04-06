@@ -1,26 +1,37 @@
 <template>
-  <h1>タスク更新</h1>
-  <div v-if="store.isLoading">loading...</div>
-  <div v-else>
-    <TaskForm @hasError="onFormErrorChange" @onSubmit="onSubmit" />
-    <Button icon="arrow_back" :name="BUTTON_LABEL.BACK" @on-click="onBack()" />
-    <Button
-      icon="save"
-      form="task-form"
-      :name="BUTTON_LABEL.SAVE"
-      :disabled="saveButtonDisabled"
-      type="submit"
-    />
-  </div>
+  <ErrorMessage />
+  <v-container>
+    <v-card class="pa-5">
+      <div v-if="store.isLoading" class="text-center">
+        <v-progress-circular color="primary" indeterminate />
+      </div>
+      <div v-else>
+        <TaskForm @hasError="onFormErrorChange" @onSubmit="submit" />
+        <div class="d-flex justify-space-between">
+          <v-btn prepend-icon="mdi-undo" @click="back">
+            {{ BUTTON_LABEL.BACK }}
+          </v-btn>
+          <v-btn
+            prepend-icon="mdi-archive"
+            :disabled="saveButtonDisabled"
+            type="submit"
+            form="task-form"
+            color="primary"
+          >
+            {{ BUTTON_LABEL.SAVE }}
+          </v-btn>
+        </div>
+      </div>
+    </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import TaskForm from '../components/TaskForm.vue'
 import { useTaskStore } from '../store/taskStore'
 import { useRoute, useRouter } from 'vue-router'
-import { BUTTON_LABEL, TASK_INIT } from '../constants/task'
-import Button from '@/components/ui/Button.vue'
+import { BUTTON_LABEL } from '../constants/task'
 import type { TaskFormType } from '../types/task'
 
 const route = useRoute()
@@ -39,12 +50,12 @@ const onFormErrorChange = (isFormError: boolean) => {
 }
 
 // 戻る
-const onBack = () => {
+const back = () => {
   router.push({ name: 'task.list' })
 }
 
 // 更新
-const onSubmit = (value: TaskFormType) => {
+const submit = (value: TaskFormType) => {
   store.updateTask({ ...value, id: Number(id) })
   router.push({ name: 'task.list' })
 }
@@ -57,3 +68,4 @@ onBeforeMount(() => {
   store.getTaskFormById(Number(id))
 })
 </script>
+<style lang="scss" scoped></style>

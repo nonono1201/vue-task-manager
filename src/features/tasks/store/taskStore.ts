@@ -64,7 +64,7 @@ export const useTaskStore = defineStore('task', () => {
    */
   const deleteTask = async (id: number) => {
     await taskApi.delete(id)
-    getTasks()
+    await getTasks()
   }
 
   /**

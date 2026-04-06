@@ -13,3 +13,11 @@ export type TaskFormType = {
 export type TaskType = TaskFormType & {
   id: number
 }
+
+/**
+ * 一覧のヘッダー
+ */
+export type ListHeader = {
+  align: string,
+  label: string,
+}

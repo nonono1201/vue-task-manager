@@ -85,6 +85,6 @@ export const taskApi = {
     if (taskIndex === -1) {
       throw new BusinessError('削除対象のタスクが見つかりませんでした。')
     }
-    mockTasks.splice(taskIndex, 1);
+    mockTasks = mockTasks.filter(task => task.id !== id)
   },
 }
