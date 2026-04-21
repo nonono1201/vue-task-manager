@@ -4,7 +4,7 @@
       <v-row>
         <v-text-field
           v-model="title.value.value"
-          :label="FORM_LABEL.TITLE"
+          :label="FORM_LABEL.TITLE + '(必須)'"
           :error-messages="title.errorMessage.value"
           required
         />
@@ -35,12 +35,11 @@ const emit = defineEmits<{
 }>()
 
 const { handleSubmit, resetForm, meta } = useForm({
-  validationSchema: {
-    title: 'required',
-  },
   initialValues: store.taskForm,
 })
-const title = useField<string>('title')
+const title = useField<string>('title','required',{
+  label: FORM_LABEL.TITLE,
+})
 const completed = useField<boolean>('completed')
 const dueDate = useField<string>('dueDate')
 

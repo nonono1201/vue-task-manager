@@ -17,7 +17,7 @@ import { defineRule, configure } from 'vee-validate';
 import { required } from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n';
 import ja from '@vee-validate/i18n/dist/locale/ja.json'
-import { APP_COLORS } from './conatants/color'
+import './style.css'
 
 // vee-validate設定
 defineRule('required', required)
@@ -34,13 +34,6 @@ const vuetify = createVuetify({
   directives,
   theme: {
     defaultTheme: 'light', // 'system' | 'light' | 'dark'
-    themes: {
-      light: {
-        colors: {
-          primary: APP_COLORS.primary
-        }
-      }
-    }
   },
 })
 

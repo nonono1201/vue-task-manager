@@ -8,7 +8,6 @@
     </v-container>
     <v-container>
       <v-card>
-        {{ store.tasks }}
         <v-data-table :headers="TABLE_HEADERS" :items="tasks">
           <template v-slot:item.actions="{ item }">
             <div class="d-flex ga-2 justify-end">

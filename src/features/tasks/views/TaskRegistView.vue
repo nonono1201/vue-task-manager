@@ -1,21 +1,23 @@
 <template>
-  <ErrorMessage/>
+  <ErrorMessage />
   <v-container>
-    <TaskForm @hasError="onFormErrorChange" @onSubmit="submit" />
-    <div class="d-flex justify-space-between">
-      <v-btn prepend-icon="mdi-undo" @click="back">
-        {{ BUTTON_LABEL.BACK }}
-      </v-btn>
-      <v-btn
-        prepend-icon="mdi-archive"
-        :disabled="saveButtonDisabled"
-        type="submit"
-        form="task-form"
-        color="primary"
-      >
-        {{ BUTTON_LABEL.SAVE }}
-      </v-btn>
-    </div>
+    <v-card class="pa-5">
+      <TaskForm @hasError="onFormErrorChange" @onSubmit="submit" />
+      <div class="d-flex justify-space-between">
+        <v-btn prepend-icon="mdi-undo" @click="back">
+          {{ BUTTON_LABEL.BACK }}
+        </v-btn>
+        <v-btn
+          prepend-icon="mdi-archive"
+          :disabled="saveButtonDisabled"
+          type="submit"
+          form="task-form"
+          color="primary"
+        >
+          {{ BUTTON_LABEL.SAVE }}
+        </v-btn>
+      </div>
+    </v-card>
   </v-container>
 </template>
 
@@ -52,5 +54,4 @@ onBeforeMount(() => {
   store.setTaskForm(TASK_INIT)
 })
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

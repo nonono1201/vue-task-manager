@@ -11,16 +11,16 @@ export const FORM_LABEL = {
 /** 一覧のヘッダー */
 export const TABLE_HEADERS: DataTableHeader[] = [
   {
-    title: 'FORM_LABEL.TITLE',
+    title: FORM_LABEL.TITLE,
     key: 'title',
     align: 'start',
   },
   {
-    title: 'FORM_LABEL.COMPLETED',
+    title: FORM_LABEL.COMPLETED,
     key: 'completed',
   },
   {
-    title: 'FORM_LABEL.DUE_DATE',
+    title: FORM_LABEL.DUE_DATE,
     key: 'dueDate',
   },
   {
