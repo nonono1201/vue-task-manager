@@ -1,10 +1,12 @@
+import type { Status } from "@/features/tasks/types/task"
+
 /**
  * タスク(新規登録)
  */
 export interface TaskRegistSchema {
   title: string
   dueDate: string
-  completed: boolean
+  status: Status
 }
 
 /**

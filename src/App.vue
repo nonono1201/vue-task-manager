@@ -1,4 +1,5 @@
 <template>
+  <link href="https://googleapis.com" rel="stylesheet">
   <v-app>
     <router-view />
   </v-app>

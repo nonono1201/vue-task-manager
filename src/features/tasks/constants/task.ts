@@ -1,5 +1,5 @@
-import type { DataTableHeader } from 'vuetify'
-import type { ListHeader, TaskFormType } from '../types/task'
+
+import type { ListHeader, Status, TaskForm } from '../types/task'
 
 /** フォームのラベル */
 export const FORM_LABEL = {
@@ -7,30 +7,6 @@ export const FORM_LABEL = {
   COMPLETED: 'ステータス',
   DUE_DATE: '期日',
 }
-
-/** 一覧のヘッダー */
-export const TABLE_HEADERS: DataTableHeader[] = [
-  {
-    title: FORM_LABEL.TITLE,
-    key: 'title',
-    align: 'start',
-  },
-  {
-    title: FORM_LABEL.COMPLETED,
-    key: 'completed',
-  },
-  {
-    title: FORM_LABEL.DUE_DATE,
-    key: 'dueDate',
-  },
-  {
-    title: 'アクション',
-    key: 'actions',
-    align: 'end',
-    sortable: false,
-  },
-]
-
 /** ボタンラベル */
 export const BUTTON_LABEL = {
   ADD: '追加',
@@ -42,15 +18,16 @@ export const BUTTON_LABEL = {
   CLOSE: '閉じる'
 }
 
-/** タスクの状態 */
-export const STATUS = {
-  COMPLETED: '完了',
-  PENDING: '未完了',
-}
-
 /** タスク初期値 */
-export const TASK_INIT: TaskFormType = {
+export const TASK_INIT: TaskForm = {
   title: '',
   dueDate: '',
-  completed: false,
+  status: 'todo'
+}
+
+/** ステータスラベル */
+export const STATUS_LABEL: Record<Status, string> = {
+  todo: '未着手',
+  doing: '着手',
+  done: '完了'
 }

@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { TaskFormType, TaskType } from '../types/task'
+import type { TaskForm, Task } from '../types/task'
 import { taskApi } from '@/services/api/taskApi'
 import { TASK_INIT } from '../constants/task'
 
 export const useTaskStore = defineStore('task', () => {
 
   /** タスク一覧 */
-  const tasks: Ref<TaskType[]> = ref([])
+  const tasks: Ref<Task[]> = ref([])
 
   /** タスク(入力情報) */
-  const taskForm: Ref<TaskFormType> = ref(TASK_INIT)
+  const taskForm: Ref<TaskForm> = ref(TASK_INIT)
 
   /** ローディング中か */
   const isLoading: Ref<boolean> = ref(false);
@@ -20,6 +20,18 @@ export const useTaskStore = defineStore('task', () => {
    */
   const getTasks = async () => {
     tasks.value = await taskApi.getTasks()
+  }
+
+  const getTodoTasks = () => {
+    return tasks.value.filter(task => task.status === 'todo')
+  }
+
+  const getDoingTasks = () => {
+    return tasks.value.filter(task => task.status === 'doing')
+  }
+
+  const getDoneTasks = () => {
+    return tasks.value.filter(task => task.status === 'done')
   }
 
   /**
@@ -36,7 +48,7 @@ export const useTaskStore = defineStore('task', () => {
    * タスク(入力情報)を設定
    * @param task タスク
    */
-  const setTaskForm = (task: TaskFormType) => {
+  const setTaskForm = (task: TaskForm) => {
     taskForm.value = task
   }
 
@@ -44,7 +56,7 @@ export const useTaskStore = defineStore('task', () => {
    * タスク登録
    * @param input 登録情報
    */
-  const registTask = async (input: TaskFormType) => {
+  const registTask = async (input: TaskForm) => {
     await taskApi.regist(input);
     getTasks();
   }
@@ -53,7 +65,7 @@ export const useTaskStore = defineStore('task', () => {
    * タスク更新
    * @param input 更新情報
    */
-  const updateTask = async (input: TaskType) => {
+  const updateTask = async (input: Task) => {
     await taskApi.update(input)
      getTasks();
   }
@@ -80,6 +92,9 @@ export const useTaskStore = defineStore('task', () => {
     taskForm,
     isLoading,
     getTasks,
+    getTodoTasks,
+    getDoingTasks,
+    getDoneTasks,
     getTaskFormById,
     setTaskForm,
     registTask,

@@ -1,0 +1,42 @@
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+@import 'tailwindcss';
+
+@theme {
+
+  --font-noto: 'Noto Sans JP';
+
+  --color-primary: #26B9B2;
+  --color-secondary: #9CA3AF;
+  --color-accent: #E63033;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-inverse: #FFFFFF;
+
+  --color-status-todo: #9CA3AF;
+  --color-status-doing: #2D9CDB;
+  --color-status-done: #55B779;
+
+  --color-background-base: #F9FAFB;
+  --color-background-subtle: #F3F4F6;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1rem;
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.5rem;
+}
+
+@layer base {
+  body {
+    @apply font-noto text-text-primary;
+    background-color: var(--color-background-base);
+  }
+}

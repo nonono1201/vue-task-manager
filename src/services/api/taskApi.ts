@@ -9,13 +9,13 @@ let mockTasks: TaskSchema[] = [
     id: 1,
     title: 'タスク名1',
     dueDate: '2026-04-01',
-    completed: true,
+    status: 'todo',
   },
   {
     id: 2,
     title: 'タスク名2',
     dueDate: '2026-04-04',
-    completed: false,
+    status: 'doing',
   },
 ]
 
