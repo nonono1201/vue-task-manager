@@ -44,7 +44,7 @@
 import { onBeforeMount, ref } from 'vue'
 import { useTaskStore } from '../store/taskStore'
 import ErrorMessage from '@/components/feedback/ErrorMessage.vue'
-import Board from '@/features/tasks/components/Board.vue'
+import Board from '../components/Board.vue'
 import BaseButton from '@/components/button/BaseButton.vue'
 import { STATUSES, type TaskForm } from '../types/task'
 import TaskFormModal from '../components/TaskFormModal.vue'

@@ -1,5 +1,5 @@
 
-import type { Status, TaskForm } from '../types/task'
+import type { TaskForm } from '../types/task'
 
 /** フォームのラベル */
 export const FORM_LABEL = {

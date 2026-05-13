@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useCommonStore } from '@/stores/commonStore' 
+import { useCommonStore } from '@/store/commonStore' 
 import { BusinessError, NotFoundError } from '@/errors'
 import { useRouter } from 'vue-router'
 

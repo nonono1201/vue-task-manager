@@ -1,4 +1,4 @@
-import TaskLMngView from '@/features/tasks/views/TaskLMngView.vue'
+import TaskLMngView from '@/features/task/views/TaskLMngView.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import NotFoundViews from '@/views/NotFoundViews.vue'
 import { createRouter, createWebHistory } from 'vue-router'
