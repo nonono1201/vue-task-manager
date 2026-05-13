@@ -43,13 +43,13 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue'
 import { useTaskStore } from '../store/taskStore'
-import ErrorMessage from '@/components/ErrorMessage.vue'
+import ErrorMessage from '@/components/feedback/ErrorMessage.vue'
 import Board from '@/features/tasks/components/Board.vue'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/button/BaseButton.vue'
 import { STATUSES, type TaskForm } from '../types/task'
 import TaskFormModal from '../components/TaskFormModal.vue'
 import { TASK_INIT } from '../constants/task'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import ConfirmDialog from '@/components/overlay/ConfirmDialog.vue'
 import LoadingOverlay from '@/components/feedback/LoadingOverlay.vue'
 
 const store = useTaskStore()
