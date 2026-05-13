@@ -13,7 +13,6 @@
     </div>
   </div>
 </template>
-w
 
 <script setup lang="ts">
 const props = defineProps<{
