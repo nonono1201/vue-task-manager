@@ -16,8 +16,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from '@/components/BaseButton.vue'
-import Dropdown, { type DropdownMenu } from '@/components/Dropdown.vue';
+import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from '@/components/button/BaseButton.vue';
+import Dropdown, { type DropdownMenu } from '@/components/overlay/Dropdown.vue';
 
 const props = defineProps<{ 
   title: string; 

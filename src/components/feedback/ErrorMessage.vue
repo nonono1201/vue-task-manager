@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCommonStore } from '@/stores/commonStore'
+import { useCommonStore } from '@/store/commonStore'
 
 const commonStore = useCommonStore()
 </script>

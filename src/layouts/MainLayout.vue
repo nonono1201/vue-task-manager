@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 
-import BaseHeader from '@/components/BaseHeader.vue';
+import BaseHeader from '@/components/layout/BaseHeader.vue';
 import { computed, type Ref } from 'vue'
 import { useRoute } from 'vue-router'
 

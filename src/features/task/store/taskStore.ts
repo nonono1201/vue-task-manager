@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import { type TaskForm, type Task, type Status, STATUSES } from '../types/task'
+import { type TaskForm, type Task, type Status } from '../types/task'
 import { taskApi } from '@/services/api/taskApi'
-import { TASK_INIT } from '../constants/task'
-import type { TaskSchema } from '@/services/api/schema'
 
 export const useTaskStore = defineStore('task', () => {
   /** タスク一覧 */

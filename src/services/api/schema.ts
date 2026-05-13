@@ -1,4 +1,4 @@
-import type { Status } from "@/features/tasks/types/task"
+import type { Status } from "@/features/task/types/task"
 
 /**
  * タスク(新規登録)

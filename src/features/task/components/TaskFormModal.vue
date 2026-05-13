@@ -27,16 +27,16 @@
 </template>
 
 <script setup lang="ts">
-import BaseField from '@/components/BaseField.vue'
+import BaseField from '@/components/form/BaseField.vue'
 import { FORM_LABEL } from '../constants/task'
 import { STATUSES, type TaskForm } from '../types/task'
 import { useForm, useField } from 'vee-validate'
 import { watch } from 'vue'
-import BaseDialog from '@/components/BaseDialog.vue'
-import SelectField from '@/components/SelectField.vue'
-import DateField from '@/components/DateField.vue'
-import BaseButton, { BUTTON_VARIANT } from '@/components/BaseButton.vue'
-import TextareaField from '@/components/TextareaField.vue'
+import BaseDialog from '@/components/overlay/BaseDialog.vue'
+import SelectField from '@/components/form/SelectField.vue'
+import DateField from '@/components/form/DateField.vue'
+import BaseButton, { BUTTON_VARIANT } from '@/components/button/BaseButton.vue'
+import TextareaField from '@/components/form/TextareaField.vue'
 
 const isOpen = defineModel<boolean>('isOpen')
 const model = defineModel<TaskForm>()
