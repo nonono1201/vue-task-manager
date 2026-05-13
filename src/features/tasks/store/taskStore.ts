@@ -1,37 +1,49 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
-import type { TaskForm, Task } from '../types/task'
+import { type TaskForm, type Task, type Status, STATUSES } from '../types/task'
 import { taskApi } from '@/services/api/taskApi'
 import { TASK_INIT } from '../constants/task'
+import type { TaskSchema } from '@/services/api/schema'
 
 export const useTaskStore = defineStore('task', () => {
-
   /** タスク一覧 */
   const tasks: Ref<Task[]> = ref([])
 
-  /** タスク(入力情報) */
-  const taskForm: Ref<TaskForm> = ref(TASK_INIT)
-
   /** ローディング中か */
-  const isLoading: Ref<boolean> = ref(false);
+  const isLoading: Ref<boolean> = ref(false)
+
+  /** ドラッグ中か */
+  const isDragging: Ref<boolean> = ref(false)
+
 
   /**
    * タスク一覧取得
    */
   const getTasks = async () => {
     tasks.value = await taskApi.getTasks()
+    console.log(tasks.value)
   }
 
-  const getTodoTasks = () => {
-    return tasks.value.filter(task => task.status === 'todo')
+  /**
+   * ステータス毎のタスク取得
+   * @param status ステータス
+   * @returns ステータス毎のタスク
+   */
+  const byStatus = (status: Status) => {
+    return tasks.value.filter((task) => task.status === status)
   }
 
-  const getDoingTasks = () => {
-    return tasks.value.filter(task => task.status === 'doing')
-  }
-
-  const getDoneTasks = () => {
-    return tasks.value.filter(task => task.status === 'done')
+  /**
+   * タスク移動
+   * @param id タスクid
+   * @param newStatus 更新後ステータス
+   */
+  const moveTask = async (id: number, newStatus: Status) => {
+    const task = tasks.value.find((task) => task.id === id)
+    if (task) {
+      task.status = newStatus
+      await updateTask(task)
+    }
   }
 
   /**
@@ -39,17 +51,10 @@ export const useTaskStore = defineStore('task', () => {
    * @param id タスクID
    */
   const getTaskFormById = async (id: number) => {
-    isLoading.value =true
-    taskForm.value = await taskApi.getTaskById(id)
+    isLoading.value = true
+    const result = await taskApi.getTaskById(id)
     isLoading.value = false
-  }
-
-  /**
-   * タスク(入力情報)を設定
-   * @param task タスク
-   */
-  const setTaskForm = (task: TaskForm) => {
-    taskForm.value = task
+    return result
   }
 
   /**
@@ -57,20 +62,20 @@ export const useTaskStore = defineStore('task', () => {
    * @param input 登録情報
    */
   const registTask = async (input: TaskForm) => {
-    await taskApi.regist(input);
-    getTasks();
+    await taskApi.regist(input)
+    getTasks()
   }
 
-    /**
+  /**
    * タスク更新
    * @param input 更新情報
    */
   const updateTask = async (input: Task) => {
     await taskApi.update(input)
-     getTasks();
+    getTasks()
   }
 
-    /**
+  /**
    * タスク削除
    * @param id タスクID
    */
@@ -84,22 +89,29 @@ export const useTaskStore = defineStore('task', () => {
    * @param flg 設定値
    */
   const setIsLoading = (flg: boolean) => {
-    isLoading.value = flg;
+    isLoading.value = flg
+  }
+
+    /**
+   * ローディング中かの設定
+   * @param flg 設定値
+   */
+  const setIsDragging = (flg: boolean) => {
+    isDragging.value = flg
   }
 
   return {
     tasks,
-    taskForm,
     isLoading,
+    isDragging,
     getTasks,
-    getTodoTasks,
-    getDoingTasks,
-    getDoneTasks,
+    byStatus,
+    moveTask,
     getTaskFormById,
-    setTaskForm,
     registTask,
     updateTask,
     deleteTask,
-    setIsLoading
+    setIsLoading,
+    setIsDragging,
   }
 })

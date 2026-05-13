@@ -36,7 +36,7 @@
 
 @layer base {
   body {
-    @apply font-noto text-text-primary;
+    @apply font-noto text-text-primary text-base;
     background-color: var(--color-background-base);
   }
 }

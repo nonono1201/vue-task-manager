@@ -1,11 +1,10 @@
 /** ステータス */
-export const STATUS = {
-  TODO: 'todo',
-  DOING: 'doing',
-  DONE: 'done'
-} as const
-export type Status =
-  typeof STATUS[keyof typeof STATUS]
+export const STATUSES = [
+  { key: 'todo', label: '未着手' },
+  { key: 'doing', label: '着手' },
+  { key: 'done', label: '完了' }
+] as const
+export type Status = typeof STATUSES[number]['key']
 
 /** タスク(フォーム用) */
 export type TaskForm = {
@@ -17,10 +16,4 @@ export type TaskForm = {
 /** タスク */
 export type Task = TaskForm & {
   id: number
-}
-
-/** 一覧のヘッダー */
-export type ListHeader = {
-  align: string,
-  label: string,
 }

@@ -1,10 +1,10 @@
 
-import type { ListHeader, Status, TaskForm } from '../types/task'
+import type { Status, TaskForm } from '../types/task'
 
 /** フォームのラベル */
 export const FORM_LABEL = {
   TITLE: 'タスク名',
-  COMPLETED: 'ステータス',
+  STATUS: 'ステータス',
   DUE_DATE: '期日',
 }
 /** ボタンラベル */
@@ -25,9 +25,3 @@ export const TASK_INIT: TaskForm = {
   status: 'todo'
 }
 
-/** ステータスラベル */
-export const STATUS_LABEL: Record<Status, string> = {
-  todo: '未着手',
-  doing: '着手',
-  done: '完了'
-}

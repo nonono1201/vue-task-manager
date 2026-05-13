@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<{
 });
 
 const buttonClass = computed(() => [
-  'px-4 font-medium flex items-center justify-center',
+  'font-medium flex items-center justify-center',
   variantClasses[props.variant],
   sizeClasses[props.size],
 ])
@@ -44,8 +44,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   ghost:'text-text-secondary',
 }
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-6 w-6 text-lg rounded',
-  md: 'h-12 w-32 text-lg rounded-2xl',
+  sm: 'h-6 w-6 px-2 text-lg rounded',
+  md: 'h-12 w-32 px-4 text-lg rounded-2xl',
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-primary h-16 px-20 flex items-center">
+    <div class="bg-primary h-16 px-20 flex items-center justify-between">
         <div class="text-text-inverse text-lg font-medium">
             {{ props.title }}
         </div>
