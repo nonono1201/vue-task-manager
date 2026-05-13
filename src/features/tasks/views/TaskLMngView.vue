@@ -50,7 +50,7 @@ import { STATUSES, type TaskForm } from '../types/task'
 import TaskFormModal from '../components/TaskFormModal.vue'
 import { TASK_INIT } from '../constants/task'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
-import LoadingOverlay from '@/components/LoadingOverlay.vue'
+import LoadingOverlay from '@/components/feedback/LoadingOverlay.vue'
 
 const store = useTaskStore()
 
