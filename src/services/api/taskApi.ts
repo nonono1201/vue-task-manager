@@ -1,0 +1,90 @@
+import { BusinessError, NotFoundError } from '@/errors';
+import type { TaskRegistSchema, TaskSchema } from './schema';
+
+/**
+ * タスク一覧(mock)
+ */
+let mockTasks: TaskSchema[] = [
+  {
+    id: 1,
+    title: 'タスク名1',
+    dueDate: '2026-04-01',
+    status: 'todo',
+  },
+  {
+    id: 2,
+    title: 'タスク名2',
+    dueDate: '2026-04-04',
+    status: 'doing',
+  },
+]
+
+export const taskApi = {
+  /**
+   * 一覧情報取得
+   * @returns タスク一覧
+   */
+  getTasks: async (): Promise<TaskSchema[]> => {
+    // 疑似API呼び出し：mockTasksを返す
+    await new Promise((r) => setTimeout(r, 200))
+    return mockTasks
+  },
+
+  /**
+   * 詳細情報取得
+   * @param id タスクID
+   * @returns タスク
+   */
+  getTaskById: async (id: number): Promise<TaskSchema> => {
+    // 疑似API呼び出し：mockTasksから一致するidの情報を返す
+    await new Promise((r) => setTimeout(r, 200))
+    const targetId = mockTasks.findIndex(task => task.id === id)
+    if (targetId === -1) {
+      throw new NotFoundError();
+    } 
+    return mockTasks[targetId]
+  },
+
+  /**
+   * 登録
+   * @param input 登録情報
+   */
+  regist: async (input: TaskRegistSchema) => {
+    // 疑似API呼び出し：mockTasksに追加する
+    await new Promise((r) => setTimeout(r, 200))
+    const maxId = mockTasks.reduce((max, task) => Math.max(max, task.id), -Infinity)
+    const newTask: TaskSchema = {
+      ...input,
+      id: maxId + 1,
+    }
+    mockTasks = [...mockTasks, newTask]
+  },
+
+  /**
+   * 更新
+   * @param input 更新情報
+   */
+  update: async (input: TaskSchema) => {
+    // 疑似API呼び出し：一致するidのtaskを更新
+    await new Promise((r) => setTimeout(r, 200))
+    const taskIndex = mockTasks.findIndex((task) => task.id === input.id)
+    if (taskIndex === -1) {
+      throw new BusinessError('更新対象のタスクが見つかりませんでした。')
+    }
+    mockTasks = mockTasks.map((task) => (task.id === input.id ? input : task))
+  },
+
+  /**
+   * 削除
+   * @param id タスクID
+   */
+  delete: async (id: number) => {
+    // 疑似API呼び出し：一致するidのtaskを削除
+    await new Promise((r) => setTimeout(r, 200))
+        const taskIndex = mockTasks.findIndex((task) => task.id === id)
+    if (taskIndex === -1) {
+      throw new BusinessError('削除対象のタスクが見つかりませんでした。')
+    }
+    mockTasks = mockTasks.filter(task => task.id !== id)
+  },
+}
