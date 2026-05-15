@@ -3,25 +3,30 @@
     <div class="w-72 mb-8 flex justify-between">
       <div w-64 line-clamp-3>{{ props.title }}</div>
       <Dropdown :dropdown-menu="dropdownMenu" @on-menu-click="onMenuClick">
-      <span>
-      <BaseButton :disabled="false" :variant="BUTTON_VARIANT.GHOST" :size="BUTTON_SIZE.SM">
-        <span class="material-icons">more_vert</span>
-      </BaseButton>
-      </span>
+        <span>
+          <BaseButton :disabled="false" :variant="BUTTON_VARIANT.GHOST" :size="BUTTON_SIZE.SM">
+            <span class="material-icons">more_vert</span>
+          </BaseButton>
+        </span>
       </Dropdown>
     </div>
     <div>
-      <div class="text-xs text-text-secondary">期限: {{ props.dueDate.replace(/-/g, "/") }}</div>
+      <div :class="['text-xs', isOverdue ? 'text-accent' : 'text-text-secondary']">
+        期限: {{ formatDisplayDate(props.dueDate) }}
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from '@/components/button/BaseButton.vue';
-import Dropdown, { type DropdownMenu } from '@/components/overlay/Dropdown.vue';
+import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from '@/components/button/BaseButton.vue'
+import Dropdown, { type DropdownMenu } from '@/components/overlay/Dropdown.vue'
+import { formatDisplayDate } from '@/utils/date'
+import { computed } from 'vue'
+import { taskLogic } from '../logic/taskLogic'
 
-const props = defineProps<{ 
-  title: string; 
-  dueDate: string;
+const props = defineProps<{
+  title: string
+  dueDate: string
 }>()
 
 const emit = defineEmits<{
@@ -32,25 +37,26 @@ const emit = defineEmits<{
 const dropdownMenu: DropdownMenu[] = [
   {
     id: 1,
-    label: '更新'
+    label: '更新',
   },
   {
     id: 2,
-    label: '削除'
+    label: '削除',
   },
 ]
 
 const onMenuClick = (id: number) => {
-
   switch (id) {
     case 1:
       emit('onUpdate')
-      break;
+      break
     case 2:
       emit('onDelete')
-      break;
+      break
     default:
-      break;
+      break
   }
 }
+
+const isOverdue = computed(() => taskLogic.isOverdue(props.dueDate))
 </script>

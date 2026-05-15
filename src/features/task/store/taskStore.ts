@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { type TaskForm, type Task, type Status } from '../types/task'
 import { taskApi } from '@/services/api/taskApi'
+import { NotFoundError } from '@/errors'
 
 export const useTaskStore = defineStore('task', () => {
   /** タスク一覧 */
@@ -13,13 +14,11 @@ export const useTaskStore = defineStore('task', () => {
   /** ドラッグ中か */
   const isDragging: Ref<boolean> = ref(false)
 
-
   /**
    * タスク一覧取得
    */
   const getTasks = async () => {
     tasks.value = await taskApi.getTasks()
-    console.log(tasks.value)
   }
 
   /**
@@ -48,11 +47,17 @@ export const useTaskStore = defineStore('task', () => {
    * idに紐づくタスク(入力情報)を取得
    * @param id タスクID
    */
-  const getTaskFormById = async (id: number) => {
+  const findTaskById = async (id: number) => {
     isLoading.value = true
-    const result = await taskApi.getTaskById(id)
-    isLoading.value = false
-    return result
+    try {
+      const result = tasks.value.find((task) => task.id === id)
+      if (!result) {
+        throw new NotFoundError('タスクが見つかりません')
+      }
+      return result
+    } finally {
+      isLoading.value = false
+    }
   }
 
   /**
@@ -90,8 +95,8 @@ export const useTaskStore = defineStore('task', () => {
     isLoading.value = flg
   }
 
-    /**
-   * ローディング中かの設定
+  /**
+   * ドラッグ中かの設定
    * @param flg 設定値
    */
   const setIsDragging = (flg: boolean) => {
@@ -105,7 +110,7 @@ export const useTaskStore = defineStore('task', () => {
     getTasks,
     byStatus,
     moveTask,
-    getTaskFormById,
+    getTaskFormById: findTaskById,
     registTask,
     updateTask,
     deleteTask,

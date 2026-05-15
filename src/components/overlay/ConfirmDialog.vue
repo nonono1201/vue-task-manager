@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton, { BUTTON_VARIANT } from './BaseButton.vue'
+import BaseButton, { BUTTON_VARIANT } from '../button/BaseButton.vue'; 
 import BaseDialog from './BaseDialog.vue';
 
 const isOpen = defineModel<boolean>('isOpen')
