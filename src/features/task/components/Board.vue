@@ -5,12 +5,6 @@
     </div>
     <div class="relative">
       <div
-        v-if="store.isDragging"
-        class="absolute inset-0 pointer-events-none border-2 border-dashed border-blue-400 bg-blue-50/40 rounded-xl py-4 h-full text-center text-blue-500 text-sm transition"
-      >
-        ここにドロップ
-      </div>
-      <div
         v-if="!store.isDragging && isEmpty"
         class="absolute inset-0 pointer-events-none text-text-secondary text-center bg-background-subtle/50 p-4 h-full rounded-xl"
       >
@@ -20,7 +14,8 @@
         :model-value="tasks"
         :animation="150"
         group="task"
-        class="flex flex-col gap-4 min-h-34"
+        class="flex flex-col gap-4 min-h-32"
+        :class="store.isDragging ? 'pb-16' : ''"
         @add="onAdd"
         @start="onStart"
         @end="onEnd"
@@ -34,6 +29,12 @@
           />
         </div>
       </VueDraggable>
+      <div
+        v-if="store.isDragging"
+        class="absolute inset-0 pointer-events-none h-full flex items-end justify-center border-2 border-dashed border-blue-400 bg-blue-50/40 rounded-xl py-4 text-center text-blue-500 text-sm transition"
+      >
+        ここにドロップ
+      </div>
     </div>
   </div>
 </template>
@@ -41,8 +42,8 @@
 <script setup lang="ts">
 import Card from './Card.vue'
 import { STATUSES, type Status } from '../types/task'
-import { computed, ref, type Ref } from 'vue'
-import { VueDraggable, type DraggableEvent } from 'vue-draggable-plus'
+import { computed, ref } from 'vue'
+import { VueDraggable, type DraggableEvent, type SortableEvent } from 'vue-draggable-plus'
 import { useTaskStore } from '../store/taskStore'
 
 const store = useTaskStore()
@@ -63,14 +64,18 @@ const statusClass: Record<Status, string> = {
   doing: 'bg-status-doing',
   done: 'bg-status-done',
 }
-
 const statusLabel = computed(() => STATUSES.find((status) => status.key === props.status)?.label)
 
 // ０件か
 const isEmpty = computed(() => tasks.value.length === 0)
 
+// ステータスに紐づくタスク
 const tasks = computed(() => store.byStatus(props.status))
 
+// ドラッグ中か
+const isDragging = ref(false)
+
+// DraggableEvent
 const onStart = () => {
   store.setIsDragging(true)
 }
@@ -82,6 +87,7 @@ const onAdd = (event: DraggableEvent) => {
   store.moveTask(task.id, props.status)
 }
 
+// ボタンイベント
 const onUpdate = (taskId: number) => {
   emit('onUpdate', taskId)
 }

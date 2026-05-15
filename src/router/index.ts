@@ -1,6 +1,6 @@
 import TaskLMngView from '@/features/task/views/TaskLMngView.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
-import NotFoundViews from '@/views/NotFoundViews.vue'
+import NotFoundViews from '@/pages/NotFoundViews.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({

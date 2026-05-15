@@ -5,6 +5,13 @@ UI/UXおよびデータ構造を再設計し、カンバン形式のワークフ
 Vue3 + TypeScriptで作成しています。  
 (現在は固定値で動いています)
 
+## デモ
+
+- URL: TODO
+- [GitHub](https://github.com/nonono1201/vue-task-manager) 
+- [Figma](https://www.figma.com/design/I3jr1QHI9FalekcyROgB2x/%E3%82%BF%E3%82%B9%E3%82%AF%E7%AE%A1%E7%90%86?node-id=1-641&m=dev&t=SsmLwg3stEDwPAFL-1)
+
+
 ## 課題（Before）
 
 従来のCRUDベースのタスク管理では、以下の課題がありました。
@@ -28,31 +35,25 @@ Vue3 + TypeScriptで作成しています。
 ### データ設計の改善
 - ステータスを「未着手 / 着手中 / 完了」に細分化
 
-## Demo
-
-- URL: TODO
-- [GitHub](https://github.com/nonono1201/vue-task-manager) 
-- [Figma](https://www.figma.com/design/I3jr1QHI9FalekcyROgB2x/%E3%82%BF%E3%82%B9%E3%82%AF%E7%AE%A1%E7%90%86?node-id=1-641&m=dev&t=SsmLwg3stEDwPAFL-1)
-
 ## 主な機能
 - 未着手 / 着手 / 完了 のステータス管理
 - ドラッグ＆ドロップによるタスク移動
 - ステータス単位でのタスク可視化
 - 状態に応じた直感的なUI
 
-## Tech Stack
-### Frontend
+## 技術スタック
+### フロントエンド
 
 - Vue3
 - TypeScript
 - Pinia
 - Tailwind CSS
 
-### Libraries
+### ライブラリ
 - vee-validate
 - vue-draggable-plus
 
-## Architecture
+## アーキテクチャ
 
 Feature-based Pattern を採用し、
 機能単位で分離しています。
@@ -89,13 +90,13 @@ src/
 └─pages                # 共通画面（Error / NotFound など）
 ```
 
-## Future Improvements
+## 今後の改善
 - LocalStorageでの管理
 - フィルタ、検索機能の追加
 - レスポンシブ化
 - orderの保持
 
-## setup
+## セットアップ
 ```
 npm ci
 npm run dev

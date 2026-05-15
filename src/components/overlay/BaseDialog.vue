@@ -1,11 +1,13 @@
 <template>
-  <Dialog :open="isOpen">
+  <Dialog :open="isOpen" @close="onBackdropClick">
     <!-- The backdrop, rendered as a fixed sibling to the panel container -->
-    <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
-
+    <div class="fixed inset-0 bg-black/50" aria-hidden="true" />
     <!-- Full-screen container to center the panel -->
     <div class="fixed inset-0 flex w-screen items-center justify-center">
-      <DialogPanel class="w-134 rounded bg-background-subtle">
+      <DialogPanel
+        class="w-134 rounded bg-background-subtle"
+        :class="shake ? 'animate-bounce' : ''"
+      >
         <base-header :title="props.title">
           <template #right>
             <base-button
@@ -31,8 +33,9 @@
   </Dialog>
 </template>
 <script setup lang="ts">
-import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from './BaseButton.vue'
-import BaseHeader from './BaseHeader.vue'
+import { ref } from 'vue'
+import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from '../button/BaseButton.vue'
+import BaseHeader from '../layout/BaseHeader.vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
 
 const props = defineProps<{
@@ -40,4 +43,14 @@ const props = defineProps<{
 }>()
 
 const isOpen = defineModel<boolean>('isOpen')
+
+const shake = ref(false)
+
+const onBackdropClick = () => {
+  shake.value = true
+
+  setTimeout(() => {
+    shake.value = false
+  }, 300)
+}
 </script>
