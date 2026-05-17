@@ -10,11 +10,10 @@
     >
       <template #dp-input="{ value }">
         <div class="relative flex">
-          <input
+          <InputField
+            :model-value="value"
             type="text"
-            class="w-full p-2 h-auto border border-secondary"
-            :value="value"
-            readonly
+            :readonly="true"
           />
           <span
             class="absolute top-1/2 -translate-y-1/2 right-0 pr-3 material-icons text-secondary"
@@ -30,6 +29,7 @@
 
 <script setup lang="ts">
 import { ja } from 'date-fns/locale'
+import InputField from './InputField.vue'
 
 const model = defineModel<string>()
 </script>

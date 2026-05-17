@@ -1,16 +1,17 @@
 <template>
-  <div class="relative inline-block">
+  <div ref="root" class="relative inline-block">
     <!-- ボタン -->
-    <div @click="isButtonClick = true">
+    <div @click="isOpen = true">
       <slot />
     </div>
     <!-- ドロップダウン -->
-    <div v-if="isButtonClick" class="absolute right-0 mt-2 w-32 bg-background-base border rounded shadow">
+    <div v-if="isOpen" class="absolute right-0 mt-2 w-32 bg-background-base shadow">
       <div v-for="menu in props.dropdownMenu">
         <button
           @click="onMenuClick(menu.id)"
-          class="block w-full text-left px-4 py-2 hover:bg-background-subtle"
+          class="flex items-center block w-full text-left px-4 py-2 hover:bg-primary/30"
         >
+          <span class="material-icons pr-4 text-text-secondary"> {{ menu.icon }} </span>
           {{ menu.label }}
         </button>
       </div>
@@ -21,14 +22,15 @@
 export type DropdownMenu = {
   id: number
   label: string
+  icon: string
 }
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps<{
-  dropdownMenu: DropdownMenu[];
+  dropdownMenu: DropdownMenu[]
 }>()
 
 const emit = defineEmits<{
@@ -36,10 +38,28 @@ const emit = defineEmits<{
   (e: 'onButtonClick'): void
 }>()
 
-const isButtonClick = ref(false)
+const isOpen = ref(false)
+
+const root = ref<HTMLElement | null>(null)
 
 const onMenuClick = (id: number) => {
-  isButtonClick.value = false
+  isOpen.value = false
   emit('onMenuClick', id)
 }
+
+const onClickOutside = (e: MouseEvent) => {
+  if (!root.value) return
+
+  if (!root.value.contains(e.target as Node)) {
+    isOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', onClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', onClickOutside)
+})
 </script>

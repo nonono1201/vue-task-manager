@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="w-30">
+    <div class="w-30 flex items-center">
       <label>
         {{ props.label }}
       </label>

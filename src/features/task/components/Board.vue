@@ -11,16 +11,16 @@
         {{ statusLabel }}のタスクはありません
       </div>
       <VueDraggable
-        :model-value="tasks"
+        :model-value="props.tasks"
         :animation="150"
         group="task"
-        class="flex flex-col gap-4 min-h-32"
-        :class="store.isDragging ? 'pb-16' : ''"
+        class="flex flex-col gap-4 min-h-46"
+        :class="store.isDragging ? 'pb-12' : ''"
         @add="onAdd"
         @start="onStart"
         @end="onEnd"
       >
-        <div v-for="task in tasks">
+        <div v-for="task in props.tasks">
           <Card
             :title="task.title"
             :due-date="task.dueDate"
@@ -33,7 +33,7 @@
         v-if="store.isDragging"
         class="absolute inset-0 pointer-events-none h-full flex items-end justify-center border-2 border-dashed border-blue-400 bg-blue-50/40 rounded-xl py-4 text-center text-blue-500 text-sm transition"
       >
-        ここにドロップ
+        ↑ ここにドロップ ↑
       </div>
     </div>
   </div>
@@ -41,14 +41,17 @@
 
 <script setup lang="ts">
 import Card from './Card.vue'
-import { STATUSES, type Status } from '../types/task'
-import { computed, ref } from 'vue'
-import { VueDraggable, type DraggableEvent, type SortableEvent } from 'vue-draggable-plus'
+import { type Status, type Task } from '../types/task'
+import { computed } from 'vue'
+import { VueDraggable, type DraggableEvent } from 'vue-draggable-plus'
 import { useTaskStore } from '../store/taskStore'
+import { STATUS_OPTIONS } from '../constants/task'
+import { taskLogic } from '../logic/taskLogic'
 
 const store = useTaskStore()
 const props = defineProps<{
   status: Status
+  tasks: Task[]
 }>()
 const emit = defineEmits<{
   (e: 'onUpdate', taskId: number): void
@@ -64,16 +67,10 @@ const statusClass: Record<Status, string> = {
   doing: 'bg-status-doing',
   done: 'bg-status-done',
 }
-const statusLabel = computed(() => STATUSES.find((status) => status.key === props.status)?.label)
+const statusLabel = computed(() => STATUS_OPTIONS.find((status) => status.key === props.status)?.label)
 
 // ０件か
-const isEmpty = computed(() => tasks.value.length === 0)
-
-// ステータスに紐づくタスク
-const tasks = computed(() => store.byStatus(props.status))
-
-// ドラッグ中か
-const isDragging = ref(false)
+const isEmpty = computed(() => props.tasks.length === 0)
 
 // DraggableEvent
 const onStart = () => {

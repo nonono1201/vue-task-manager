@@ -1,5 +1,5 @@
 <template>
-  <textarea v-model="model" class="w-80 border border-secondary p-2 w-80" />
+  <textarea v-model="model" class="w-80 border border-secondary p-2" />
 </template>
 
 <script setup lang="ts">

@@ -1,8 +1,6 @@
 <template>
   <Dialog :open="isOpen" @close="onBackdropClick">
-    <!-- The backdrop, rendered as a fixed sibling to the panel container -->
     <div class="fixed inset-0 bg-black/50" aria-hidden="true" />
-    <!-- Full-screen container to center the panel -->
     <div class="fixed inset-0 flex w-screen items-center justify-center">
       <DialogPanel
         class="w-134 rounded bg-background-subtle"
@@ -16,7 +14,7 @@
               :variant="BUTTON_VARIANT.GHOST"
               @click="isOpen = false"
             >
-              <span class="material-icons">close</span>
+              <span class="material-icons text-text-inverse">close</span>
             </base-button>
           </template>
         </base-header>

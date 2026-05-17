@@ -9,7 +9,7 @@ import { formatStorageDate } from '@/utils/date'
 let defaultTasks: TaskSchema[] = [
   {
     id: 1,
-    title: 'タスク名1',
+    title: 'この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーで',
     dueDate: formatStorageDate(dayjs().add(1, 'month').toDate()),
     status: 'todo',
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background-subtle w-80 px-4 py-8 rounded-xl">
     <div class="w-72 mb-8 flex justify-between">
-      <div w-64 line-clamp-3>{{ props.title }}</div>
+      <div class="w-64 line-clamp-3 leading-6 h-[4.5rem]">{{ props.title }}</div>
       <Dropdown :dropdown-menu="dropdownMenu" @on-menu-click="onMenuClick">
         <span>
           <BaseButton :disabled="false" :variant="BUTTON_VARIANT.GHOST" :size="BUTTON_SIZE.SM">
@@ -17,6 +17,8 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+</script>
 <script setup lang="ts">
 import BaseButton, { BUTTON_SIZE, BUTTON_VARIANT } from '@/components/button/BaseButton.vue'
 import Dropdown, { type DropdownMenu } from '@/components/overlay/Dropdown.vue'
@@ -38,10 +40,12 @@ const dropdownMenu: DropdownMenu[] = [
   {
     id: 1,
     label: '更新',
+    icon: 'edit'
   },
   {
     id: 2,
     label: '削除',
+    icon: 'delete'
   },
 ]
 

@@ -13,8 +13,8 @@ export class NotFoundError extends AppError {
 }
 
 export class BusinessError extends AppError {
-  constructor(message = 'データが見つかりませんでした') {
+  constructor(message = '業務例外が発生しました') {
     super(message);
-    this.name = 'NotFoundError';
+    this.name = 'BusinessError';
   }
 }

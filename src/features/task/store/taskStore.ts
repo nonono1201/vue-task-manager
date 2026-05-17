@@ -22,15 +22,6 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   /**
-   * ステータス毎のタスク取得
-   * @param status ステータス
-   * @returns ステータス毎のタスク
-   */
-  const byStatus = (status: Status) => {
-    return tasks.value.filter((task) => task.status === status)
-  }
-
-  /**
    * タスク移動
    * @param id タスクid
    * @param newStatus 更新後ステータス
@@ -108,7 +99,6 @@ export const useTaskStore = defineStore('task', () => {
     isLoading,
     isDragging,
     getTasks,
-    byStatus,
     moveTask,
     getTaskFormById: findTaskById,
     registTask,

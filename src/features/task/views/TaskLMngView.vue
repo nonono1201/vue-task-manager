@@ -2,25 +2,34 @@
   <ErrorMessage />
   <LoadingOverlay :loading="store.isLoading" />
   <div class="h-24 w-272 mx-auto flex items-center justify-between">
-    <div>
-      <!-- TODO タスク名検索 -->
-      <!-- TODO ステータス -->
+    <div class="flex gap-10">
+      <BaseField :label="FORM_LABEL.TITLE">
+        <InputField v-model="title" type="text" />
+      </BaseField>
+      <BaseField :label="FORM_LABEL.STATUS">
+        <SelectField v-model="status" :options="TASK_FILTER_STATUS_OPTIONS" :size="INPUT_SIZE.SM" />
+      </BaseField>
     </div>
     <div>
       <BaseButton :disabled="false" @click="isRegistFormOpen = true" class="bg-primary">
-        タスク追加
+        <span class="material-icons">add</span>タスク追加
       </BaseButton>
     </div>
   </div>
   <!-- ステータス毎に列を生成 -->
   <div class="flex gap-4 justify-center">
-    <div v-for="status in STATUSES">
-      <Board :status="status.key" @on-update="openUpdateFormModal" @on-delete="removeConfirm" />
+    <div v-for="status in STATUS">
+      <Board
+        :status="status"
+        :tasks="filteredTasks.filter(t => t.status === status)"
+        @on-update="openUpdateFormModal"
+        @on-delete="removeConfirm"
+      />
     </div>
   </div>
   <!-- 登録ダイアログ -->
   <TaskFormModal
-    v-model="updateTaskInfo"
+    v-model="registTaskInfo"
     v-model:is-open="isRegistFormOpen"
     title="登録"
     @on-submit="regist"
@@ -46,22 +55,32 @@ import { useTaskStore } from '../store/taskStore'
 import ErrorMessage from '@/components/feedback/ErrorMessage.vue'
 import Board from '../components/Board.vue'
 import BaseButton from '@/components/button/BaseButton.vue'
-import { STATUSES, type TaskForm } from '../types/task'
+import { STATUS, type TaskForm } from '../types/task'
 import TaskFormModal from '../components/TaskFormModal.vue'
-import { TASK_INIT } from '../constants/task'
+import { FORM_LABEL, TASK_FILTER_STATUS_OPTIONS, TASK_INIT } from '../constants/task'
 import ConfirmDialog from '@/components/overlay/ConfirmDialog.vue'
 import LoadingOverlay from '@/components/feedback/LoadingOverlay.vue'
+import BaseField from '@/components/form/BaseField.vue'
+import SelectField, { INPUT_SIZE } from '@/components/form/SelectField.vue'
+import InputField from '@/components/form/InputField.vue'
+import { storeToRefs } from 'pinia'
+import { useTaskFilter } from '../logic/useTaskFilter'
 
 const store = useTaskStore()
 
 // 更新・削除対象タスクID
 const targetTaskId = ref()
 
+// フィルター
+const { tasks } = storeToRefs(store)
+const { title, status, filteredTasks } = useTaskFilter(tasks)
+
 // 追加
 const isRegistFormOpen = ref(false)
-const regist = async (value: TaskForm) => {
+const registTaskInfo = ref(TASK_INIT)
+const regist = async () => {
   store.setIsLoading(true)
-  await store.registTask(value)
+  await store.registTask(registTaskInfo.value)
   store.setIsLoading(false)
 }
 

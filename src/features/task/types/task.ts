@@ -1,11 +1,20 @@
 /** ステータス */
-export const STATUSES = [
-  { key: 'todo', label: '未着手' },
-  { key: 'doing', label: '着手' },
-  { key: 'done', label: '完了' }
-] as const
-export type Status = typeof STATUSES[number]['key']
+export const STATUS = {
+  TODO: 'todo',
+  DOING: 'doing',
+  DONE: 'done',
+} as const
 
+export type Status = typeof STATUS[keyof typeof STATUS]
+
+/** ステータス(フィルター用) */
+export const TASK_FILTER_STATUS = {
+  ALL: 'all',
+  ...STATUS,
+} as const
+
+export type TaskFilterStatus =
+  typeof TASK_FILTER_STATUS[keyof typeof TASK_FILTER_STATUS]
 /** タスク(フォーム用) */
 export type TaskForm = {
   title: string

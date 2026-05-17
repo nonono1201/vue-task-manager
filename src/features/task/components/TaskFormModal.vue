@@ -7,7 +7,7 @@
             <TextareaField v-model="title.value.value" />
           </BaseField>
           <BaseField :label="FORM_LABEL.STATUS">
-            <SelectField v-model="status.value.value" :options="STATUSES" />
+            <SelectField v-model="status.value.value" :options="STATUS_OPTIONS" />
           </BaseField>
           <BaseField :label="FORM_LABEL.DUE_DATE">
             <DateField v-model="dueDate.value.value" />
@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import BaseField from '@/components/form/BaseField.vue'
-import { FORM_LABEL } from '../constants/task'
-import { STATUSES, type TaskForm } from '../types/task'
+import { FORM_LABEL, STATUS_OPTIONS } from '../constants/task'
+import { type TaskForm } from '../types/task'
 import { useForm, useField } from 'vee-validate'
 import { watch } from 'vue'
 import BaseDialog from '@/components/overlay/BaseDialog.vue'
